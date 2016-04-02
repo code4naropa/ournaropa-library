@@ -1,0 +1,24 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+$naropa-color: lighten(purple, 30%);
+$cu-color: lighten(gold, 30%);
+$bpl-color: lighten(darkgreen, 30%);
+
+#results {
+  
+  .result-naropa {
+    background-color: $naropa-color;
+  }
+  
+  .result-cu {
+    background-color: $cu-color;
+  }
+  
+  .result-bpl {
+    background-color: $bpl-color;
+  }
+  
+}

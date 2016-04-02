@@ -1,0 +1,50 @@
+<%= form_tag search_path, :method => :get do %>
+  <%= label_tag(:query, "Search for:") %>
+  <%= text_field_tag(:query, @query, :placeholder => "What are you looking for today...?") %>
+<%= check_box_tag :naropa, 'true' %>
+  <%= label_tag(:naropa, "Naropa Libraries") %> 
+<%= check_box_tag :cu, 'true' %>
+  <%= label_tag(:cu, "CU Libraries") %> 
+<%= check_box_tag :bpl, 'true' %>
+  <%= label_tag(:bpl, "Boulder Public Library") %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+
+<div id="results">
+  <% for i in 0..9 do %>
+    <div class="result result-naropa empty">
+    </div>
+    <div class="result result-cu empty">
+    </div>
+    <div class="result result-bpl empty">
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">  
+  
+  // search Naropa
+  $(".result-naropa").first().html("Loading");
+  $.ajax({
+    type: "GET",
+    url: '<%= fetch_results_path "naropa", @query %>',
+    dataType: "script"
+  });
+  
+  // search CU
+  $(".result-cu").first().html("Loading");
+  $.ajax({
+    type: "GET",
+    url: '<%= fetch_results_path "cu", @query %>',
+    dataType: "script"
+  });
+  
+  // search BPL
+  $(".result-bpl").first().html("Loading");
+  $.ajax({
+    type: "GET",
+    url: '<%= fetch_results_path "bpl", @query %>',
+    dataType: "script"
+  });
+</script>

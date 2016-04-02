@@ -1,30 +1,39 @@
 require_dependency "ournaropa_library/application_controller"
 
 module OurnaropaLibrary
-  class SearchController < ApplicationController
+  class SearchController < ::ApplicationController
     
     require "uri"
 
+    # inherit the layout from the main application
+    layout 'application'
+    
+    def index
+      
+    end
+    
     # GET /search/QUERY
     def show
-      
+            
       @query = params[:query]
       
-      @search_naropa  = params[:naropa].present? ? params[:naropa] : false
-      @search_cu      = params[:cu].present? ? params[:cu] : false
-      @search_bpl     = params[:bpl].present? ? params[:bpl] : false
-      
-      
-      # if all three are false, then the user must have forgotten to put in the search libraries --- we'll search all three
-      if @search_naropa == false && @search_cu == false && @search_bpl == false
-        @search_naropa = @search_cu = @search_bpl = true
-      end
+      if @query.blank?
+        redirect_to home_path
+      else 
         
-      render :show 
-      # search CU
-      
-      # search BPL      
-      
+        @search_naropa  = params[:naropa].present? ? params[:naropa] : false
+        @search_cu      = params[:cu].present? ? params[:cu] : false
+        @search_bpl     = params[:bpl].present? ? params[:bpl] : false
+
+
+        # if all three are false, then the user must have forgotten to put in the search libraries --- we'll search all three
+        if @search_naropa == false && @search_cu == false && @search_bpl == false
+          @search_naropa = @search_cu = @search_bpl = true
+        end
+
+        render :show 
+        
+      end
     end  
     
     

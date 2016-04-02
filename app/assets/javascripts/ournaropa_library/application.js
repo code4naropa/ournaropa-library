@@ -11,4 +11,6 @@
 // about supported directives.
 //
 //= require jquery
+//= require materialize-sprockets
+//= require materialize/extras/nouislider
 //= require_tree .

@@ -7,22 +7,28 @@ $naropa-color: lighten(purple, 30%);
 $cu-color: lighten(gold, 30%);
 $bpl-color: lighten(darkgreen, 30%);
 
-#results {
+#library {
+  .index .valign-wrapper {
+    height: 500px;
+  }
   
-}
+  #results {
 
-// background coloring
-#results .result-naropa,
-form #naropa + label {
-  background-color: $naropa-color;
-}
+  }
 
-#results .result-cu,
-form #cu + label {
-  background-color: $cu-color;
-}
+  // background coloring
+  #results .result-naropa,
+  form #naropa + label {
+    background-color: $naropa-color;
+  }
 
-#results .result-bpl,
-form #bpl + label {
-  background-color: $bpl-color;
+  #results .result-cu,
+  form #cu + label {
+    background-color: $cu-color;
+  }
+
+  #results .result-bpl,
+  form #bpl + label {
+    background-color: $bpl-color;
+  }
 }

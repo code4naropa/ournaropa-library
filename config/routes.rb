@@ -4,4 +4,6 @@ OurnaropaLibrary::Engine.routes.draw do
   
   get '/fetch_results/:school/:query', to: 'search#fetch_results', as: :fetch_results
   
+  root 'search#index', as: :home
+  
 end

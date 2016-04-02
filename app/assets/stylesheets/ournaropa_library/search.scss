@@ -37,18 +37,24 @@ $bpl-color: #26a69a;
       padding: 20px;
     }
     
-    // hover effect
-    &:hover {
+    // hover effect on findings and "more"
+    &.hover-effect:hover {
       // Material z-index 1 equivalent
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     }
+    
+    // limit icons to 100px width
+    img {
+      max-width: 100px;
+    }
+    
   }
 
-  // background coloring
+  // coloring of findings
   #results .result-naropa {
     background-color: transparentize($naropa-color, 0.75);
     
-    &:hover {
+    &.hover-effect:hover {
       background-color: $naropa-color;
     }
   }
@@ -56,7 +62,7 @@ $bpl-color: #26a69a;
   #results .result-cu {
      background-color: transparentize($cu-color, 0.75);
     
-    &:hover {
+    &.hover-effect:hover {
       background-color: $cu-color;
     }
   }
@@ -64,7 +70,7 @@ $bpl-color: #26a69a;
   #results .result-bpl {
     background-color: transparentize($bpl-color, 0.75);
     
-    &:hover {
+    &.hover-effect:hover {
       background-color: $bpl-color;
     }
     

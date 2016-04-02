@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ournaropa_library (0.0.1)
+      nokogiri
       rails (~> 4.2.4)
 
 GEM
@@ -122,7 +123,6 @@ PLATFORMS
 DEPENDENCIES
   byebug
   jquery-rails
-  nokogiri
   ournaropa_library!
   puma
   sass-rails

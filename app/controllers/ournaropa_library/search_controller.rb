@@ -10,10 +10,16 @@ module OurnaropaLibrary
       
       @query = params[:query]
       
-      @search_naropa  = params[:naropa]
-      @search_cu      = params[:cu]
-      @search_bpl     = params[:bpl]
+      @search_naropa  = params[:naropa].present? ? params[:naropa] : false
+      @search_cu      = params[:cu].present? ? params[:cu] : false
+      @search_bpl     = params[:bpl].present? ? params[:bpl] : false
       
+      
+      # if all three are false, then the user must have forgotten to put in the search libraries --- we'll search all three
+      if @search_naropa == false && @search_cu == false && @search_bpl == false
+        @search_naropa = @search_cu = @search_bpl = true
+      end
+        
       render :show 
       # search CU
       
@@ -30,11 +36,14 @@ module OurnaropaLibrary
       
       puts case @school
       when "naropa"
-        @results = fetch_from_naropa @query
+        @link_to_results = "http://howlcat.naropa.edu/cgi-bin/koha/opac-search.pl?q=#{@query}&branch_group_limit="
+        @results = fetch_from_naropa @link_to_results
       when "cu"
-        @results = fetch_from_cu @query
+        @link_to_results = "http://encore.colorado.edu/iii/encore/search/C__S#{@query}__Orightresult__U?lang=eng&suite=cobalt"
+        @results = fetch_from_cu @link_to_results
       when "bpl"
-        @results = fetch_from_bpl @query
+        @link_to_results = "http://boulder.flatironslibrary.org/Union/Search?lookfor=#{@query}"
+        @results = fetch_from_bpl @link_to_results
       end
         
       respond_to do |format|
@@ -46,16 +55,25 @@ module OurnaropaLibrary
   private
   
     # fetches from Naropa 
-    def fetch_from_naropa query
-      url = "http://howlcat.naropa.edu/cgi-bin/koha/opac-search.pl?q=#{query}&branch_group_limit="
+    def fetch_from_naropa url
       
       # fetch contents
       content = Nokogiri::HTML(fetch_from_url url)
-        
+      
       results = []
+      @result_count = 0
       
       # parse results
       if content.css(".bibliocol").present?
+        
+        # GET NUMBER RESULTS
+        @result_count = content.css("#numresults").text
+        # cut away useless info
+        @result_count = @result_count[0, @result_count.index(' results.')].strip
+        # cut away currently showing
+        @result_count = @result_count[@result_count.rindex(' ')+1, @result_count.length]
+      
+        # PARSE RESULTS
         content.css(".bibliocol").each do |result|
 
           results.push({
@@ -73,33 +91,44 @@ module OurnaropaLibrary
       
     end
     
-    def fetch_from_bpl query
-      url = "http://boulder.flatironslibrary.org/Union/Search?lookfor=#{query}"
+    def fetch_from_bpl url
       
       # fetch contents
       content = Nokogiri::HTML(fetch_from_url url)
         
       results = []
+      @result_count = 0
       
-      # parse results
-      content.css(".result").each do |result|
+      # PARSE RESULTS
+      if content.css(".result").present?
         
-        availability = "<ul>"
+        # GET NUMBER RESULTS
+        @result_count = content.css(".result-head").text
+        # cut away query time
+        @result_count = @result_count[0, @result_count.index(' query')].strip
+        # cut away currently showing
+        @result_count = @result_count[@result_count.rindex(' ')+1, @result_count.length]
         
-        result.css(".row.related-manifestation").each do |manifestation|
-          availability += "<li>" + manifestation.css(".manifestation-format > a:first-of-type").text + ": " + manifestation.css(".manifestation-format + div > .related-manifestation-shelf-status").text + " &mdash; " + manifestation.css(".manifestation-format + div > .smallText").text + "</li>"
+        
+        content.css(".result").each do |result|
+
+          availability = "<ul>"
+
+          result.css(".row.related-manifestation").each do |manifestation|
+            availability += "<li>" + manifestation.css(".manifestation-format > a:first-of-type").text + ": " + manifestation.css(".manifestation-format + div > .related-manifestation-shelf-status").text + " &mdash; " + manifestation.css(".manifestation-format + div > .smallText").text + "</li>"
+          end
+
+          availability += "</ul>"
+
+          results.push({
+            :title => result.css(".result-title").text,
+            :author => result.css(".resultsList > .row .row:nth-of-type(2) .result-value").text,
+            :availability => availability,
+            :url => "http://boulder.flatironslibrary.org" + result.css(".result-title").attribute("href").value
+
+            })
+
         end
-        
-        availability += "</ul>"
-        
-        results.push({
-          :title => result.css(".result-title").text,
-          :author => result.css(".resultsList > .row .row:nth-of-type(2) .result-value").text,
-          :availability => availability,
-          :url => "http://boulder.flatironslibrary.org" + result.css(".result-title").attribute("href").value
-          
-          })
-        
       end
       
       return results
@@ -107,16 +136,23 @@ module OurnaropaLibrary
     end
     
     # search CU library
-    def fetch_from_cu query
-      url = "http://encore.colorado.edu/iii/encore/search/C__S" + query + "__Orightresult__U?lang=eng&suite=cobalt"
+    def fetch_from_cu url
       
       # fetch contents
       content = Nokogiri::HTML(fetch_from_url url)
-        
+            
       results = []
+      @result_count = 0
           
       # parse result
       if content.css("#resultsAnyComponent").present?
+        
+        # GET NUMBER OF RESULTS
+        @result_count = content.css("#searchResultsAnyComponent .noResultsHideMessage").text.strip
+        # cut away currently showing
+        @result_count = @result_count[@result_count.rindex(' ')+1, @result_count.length]
+
+        # PARSE RESULTS
         content.css(".searchResult").each do |result|
 
           if result.css(".title").present?

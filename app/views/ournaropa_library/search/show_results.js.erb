@@ -12,13 +12,43 @@ function addResult(title, author, availability, url) {
   $(".result-<%= @school %>.empty").first().removeClass("empty");
 }
 
+function addViewMore(url) {
+   $(".result-<%= @school %>.more").first().html(
+    '<a target="_blank" href="' + url + '">'
+    + "<div class=\"result result-<%= escape_javascript @school %>\">"
+    + "<p>View more <%= full_school_name @school %> results...</p>"
+    + "</div>"
+    + "</a>"
+   );
+}
+
+function showResultCount(school, count) {
+  $("#"+school+" + label").append(" (" + count + ")");
+}
+
+
+// show result count at top
+showResultCount("<%= @school %>", "<%= @result_count %>");
 
 <% if @results.present? %>
-  <% @results.each do |result| %>
+  
+  // fill in results
+  <% @results.each_with_index do |result, index| %>
+    
+    <% #break this cycle if we have reached the max results
+      if index == num_results_per_source
+        break
+      end %>
   
     addResult("<%= escape_javascript result[:title] %>", "<%= escape_javascript result[:author] %>", "<%= escape_javascript result[:availability].html_safe %>", "<%= escape_javascript result[:url] %>");
 
   <% end %>
+  
+  <% # if @results.count > num_results_per_source, then show link to view more results!
+    if @results.count > num_results_per_source %>
+    addViewMore("<%= escape_javascript @link_to_results %>")
+  <% end %>
+  
 <% else %>
-  $(".result-<%= @school %>.empty").first().html("Nothing found at <%= full_school_name @school %>");
+  $(".result-<%= @school %>.empty").first().html("<p>Nothing found at <%= full_school_name @school %></p>");
 <% end %>

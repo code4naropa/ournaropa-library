@@ -12,5 +12,9 @@ module OurnaropaLibrary
       end
     end
     
+    def num_results_per_source
+      return 10
+    end
+    
   end
 end

@@ -9,16 +9,20 @@ $bpl-color: lighten(darkgreen, 30%);
 
 #results {
   
-  .result-naropa {
-    background-color: $naropa-color;
-  }
-  
-  .result-cu {
-    background-color: $cu-color;
-  }
-  
-  .result-bpl {
-    background-color: $bpl-color;
-  }
-  
+}
+
+// background coloring
+#results .result-naropa,
+form #naropa + label {
+  background-color: $naropa-color;
+}
+
+#results .result-cu,
+form #cu + label {
+  background-color: $cu-color;
+}
+
+#results .result-bpl,
+form #bpl + label {
+  background-color: $bpl-color;
 }

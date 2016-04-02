@@ -1,34 +1,72 @@
-/*
-  Place all the styles related to the matching controller here.
-  They will automatically be included in application.css.
-*/
+$naropa-color: #e765e7;
+$cu-color: #EBD47E;
+$bpl-color: #26a69a;
 
-$naropa-color: lighten(purple, 30%);
-$cu-color: lighten(gold, 30%);
-$bpl-color: lighten(darkgreen, 30%);
 
 #library {
-  .index .valign-wrapper {
+  
+  // give valign wrapper extra height for vertical centering
+  .valign-wrapper {
     height: 500px;
+    transition: all 1s ease-out;
   }
   
-  #results {
+  // split up labels a little bit
+  input[type='checkbox']+label {  
+    margin-right:50px;
+  }
+  
+  
+  .result {
+    
+    // hide results at start
+    display: none;
+    
+    // remove text margins
+    p { margin: 0px;  }    
 
+    // remove the link styling
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    // add padding
+    div.col, 
+    &.loading > a > div {
+      padding: 20px;
+    }
+    
+    // hover effect
+    &:hover {
+      // Material z-index 1 equivalent
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
   }
 
   // background coloring
-  #results .result-naropa,
-  form #naropa + label {
-    background-color: $naropa-color;
+  #results .result-naropa {
+    background-color: transparentize($naropa-color, 0.75);
+    
+    &:hover {
+      background-color: $naropa-color;
+    }
   }
 
-  #results .result-cu,
-  form #cu + label {
-    background-color: $cu-color;
+  #results .result-cu {
+     background-color: transparentize($cu-color, 0.75);
+    
+    &:hover {
+      background-color: $cu-color;
+    }
   }
 
-  #results .result-bpl,
-  form #bpl + label {
-    background-color: $bpl-color;
+  #results .result-bpl {
+    background-color: transparentize($bpl-color, 0.75);
+    
+    &:hover {
+      background-color: $bpl-color;
+    }
+    
   }
 }

@@ -1,25 +1,24 @@
-function addResult(title, author, availability, url) {
-  $(".result-<%= @school %>.empty").first().html(
-    '<a target="_blank" href="' + url + '">'
-    + "<div class=\"result result-<%= escape_javascript @school %>\">"
-    + "<p>"+title+"</p>"
+function show_result(title, author, availability, url) {
+    
+  $(".result-<%= @school %>.empty .content").first().html(
+    "<h5>"+title+"</h5>"
     + "<p>"+author+"</p>"
     + "<p>"+availability+"</p>"
-    + "</div>"
-    + "</a>"
    );
   
+  // link
+  $(".result-<%= @school %>.empty a").first().attr("href", url);
+  
+  // enable
+  $(".result-<%= @school %>.empty").first().show(0);
   $(".result-<%= @school %>.empty").first().removeClass("empty");
 }
 
-function addViewMore(url) {
-   $(".result-<%= @school %>.more").first().html(
-    '<a target="_blank" href="' + url + '">'
-    + "<div class=\"result result-<%= escape_javascript @school %>\">"
-    + "<p>View more <%= full_school_name @school %> results...</p>"
-    + "</div>"
-    + "</a>"
-   );
+// enable view more results
+function enable_view_more(url) {
+  $(".result-<%= @school %>.more a.link").attr("href", url);
+  $(".result-<%= @school %>.more").show(0);
+  //console.log("Enabling something");
 }
 
 function showResultCount(school, count) {
@@ -29,6 +28,9 @@ function showResultCount(school, count) {
 
 // show result count at top
 showResultCount("<%= @school %>", "<%= @result_count %>");
+
+<% # disable loading indicator  %>
+$(".result-<%= @school %>.loading").hide(0);
 
 <% if @results.present? %>
   
@@ -40,15 +42,15 @@ showResultCount("<%= @school %>", "<%= @result_count %>");
         break
       end %>
   
-    addResult("<%= escape_javascript result[:title] %>", "<%= escape_javascript result[:author] %>", "<%= escape_javascript result[:availability].html_safe %>", "<%= escape_javascript result[:url] %>");
+    show_result("<%= escape_javascript result[:title] %>", "<%= escape_javascript result[:author] %>", "<%= escape_javascript result[:availability].html_safe %>", "<%= escape_javascript result[:url] %>");
 
   <% end %>
   
   <% # if @results.count > num_results_per_source, then show link to view more results!
     if @results.count > num_results_per_source %>
-    addViewMore("<%= escape_javascript @link_to_results %>")
+    enable_view_more("<%= escape_javascript @link_to_results %>");
   <% end %>
   
 <% else %>
-  $(".result-<%= @school %>.empty").first().html("<p>Nothing found at <%= full_school_name @school %></p>");
+  $(".result-<%= @school %>.none").show(0);
 <% end %>

@@ -129,6 +129,8 @@ PLATFORMS
 DEPENDENCIES
   byebug
   jquery-rails
+  material_icons
+  materialize-sass
   ournaropa_library!
   puma
   sass-rails

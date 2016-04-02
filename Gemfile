@@ -19,6 +19,10 @@ gem 'sass-rails'
 
 gem 'puma'
 
+gem 'material_icons'
+
+gem 'materialize-sass'
+
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 

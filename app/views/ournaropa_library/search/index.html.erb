@@ -17,13 +17,23 @@
             <button type="submit" class="waves-effect waves-light btn-large">Search</button>
           </div>
         </div>
-        <%= label_tag(:query, "Search for:") %>
-        <%= check_box_tag :naropa, 'true', @search_naropa %>
-        <%= label_tag(:naropa, "Naropa Libraries") %> 
-        <%= check_box_tag :cu, 'true', @search_cu %>
-        <%= label_tag(:cu, "CU Libraries") %> 
-        <%= check_box_tag :bpl, 'true', @search_bpl %>
-        <%= label_tag(:bpl, "Boulder Public Library") %>
+      
+      
+        <div class="row">
+          <div class="col s12 center-align">
+            <%= check_box_tag :naropa, 'true', true, :class => "filled-in" %>
+            <%= label_tag(:naropa, "Naropa Libraries") %> 
+
+            <%= check_box_tag :cu, 'true', true, :class => "filled-in" %>
+            <%= label_tag(:cu, "CU Libraries") %> 
+
+            <%= check_box_tag :bpl, 'true', true, :class => "filled-in" %>
+            <%= label_tag(:bpl, "Boulder Public Library") %>
+          </div>          
+          
+        </div>
+
+
       <% end %>
     </div>
   </div>

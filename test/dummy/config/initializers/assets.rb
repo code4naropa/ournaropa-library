@@ -11,7 +11,3 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 #Rails.application.config.assets.precompile += %w( ournaropa_library/*)
-
-initializer :assets do |config|
-  Rails.application.config.assets.paths << root.join("app", "assets", "images", "ournaropa_library")
-end

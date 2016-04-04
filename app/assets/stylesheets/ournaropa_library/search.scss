@@ -45,7 +45,8 @@ $bpl-color: #26a69a;
     
     // limit icons to 100px width
     img {
-      max-width: 100px;
+      max-width: 100%;
+      width: 100px;
     }
     
   }

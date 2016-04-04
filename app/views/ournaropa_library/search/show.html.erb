@@ -60,6 +60,20 @@
     
     <% end %>
     
+    <!-- nothing found -->
+    <% schools.each do |school| %>  
+
+      <div class="result result-<%= school %> none">
+        <div class="row">
+          <div class="col s12">
+            <h5 class="center-align"><i class="material-icons md-36">sentiment_dissatisfied</i> No results found within <%= full_school_name school %>.</h5>
+          </div>
+        </div>
+      </div>
+    
+    <% end %>
+    
+    
     <!-- result spaceholders -->    
     <% for i in 0..num_results_per_source - 1 do %>
       <% schools.each do |school| %>  
@@ -90,19 +104,6 @@
             </div>
           </div>
         </a>
-      </div>
-    
-    <% end %>
-    
-    <!-- nothinf found -->
-    <% schools.each do |school| %>  
-
-      <div class="result result-<%= school %> none">
-        <div class="row">
-          <div class="col s12">
-            <h5 class="center-align"><i class="material-icons md-36">sentiment_dissatisfied</i> No results found within <%= full_school_name school %>.</h5>
-          </div>
-        </div>
       </div>
     
     <% end %>

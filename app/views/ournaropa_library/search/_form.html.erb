@@ -1,0 +1,39 @@
+<%= form_tag search_path, :method => :get, :class => "col s12 valign" do %>
+
+    <div class="row title">
+      <h1 class="center-align">OurNaropa Library Search</h1>
+      <p class="center-align">Search Naropa's libraries, CU's libraries, and the Boulder Public Library all at once.</p>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <i class="material-icons prefix">search</i>
+          <%= text_field_tag(:query, @query, :class => "validate", :type => "text") %>
+          <%= label_tag :query, "What are you looking for today...?" %>
+      </div>
+      <div class="col s12 center-align">
+        <button type="submit" class="waves-effect waves-light btn-large">Search</button>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="m12 center-align">
+        <%= check_box_tag :naropa, 'true', @search_naropa, :class => "filled-in" %>
+        <%= label_tag(:naropa, "Naropa Libraries") %>      
+
+        <div class="row hide-on-large-only"></div>
+
+        <%= check_box_tag :cu, 'true', @search_cu, :class => "filled-in" %>
+        <%= label_tag(:cu, "CU Libraries") %> 
+
+        <div class="row hide-on-large-only"></div>
+
+        <%= check_box_tag :bpl, 'true', @search_bpl, :class => "filled-in" %>
+        <%= label_tag(:bpl, "Boulder Public Library") %>
+      </div>
+    </div>
+
+
+  <% end %>

@@ -9,7 +9,9 @@ module OurnaropaLibrary
     layout 'application'
     
     def index
-      
+      @search_naropa = true
+      @search_cu = true
+      @search_bpl = true
     end
     
     # GET /search/QUERY

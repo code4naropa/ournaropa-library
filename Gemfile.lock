@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ournaropa_library (0.1.0)
+    ournaropa_library (1.0.1)
       material_icons
       materialize-sass
       nokogiri
